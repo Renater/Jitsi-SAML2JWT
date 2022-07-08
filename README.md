@@ -17,7 +17,7 @@ This project provides 2 things :
 
 This authentification call flow with a SAML SP and the JWT server looks like this : 
 
-<img src="doc/auth_call_flow.svg" width=50% height=50%>
+<img src="doc/auth_call_flow.svg" width=70% height=70%>
 
 
 ## Configuration
