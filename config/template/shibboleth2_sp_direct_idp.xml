@@ -1,0 +1,80 @@
+<SPConfig xmlns="urn:mace:shibboleth:3.0:native:sp:config"
+    xmlns:conf="urn:mace:shibboleth:3.0:native:sp:config"
+    clockSkew="180">
+
+    <OutOfProcess tranLogFormat="u:%u, s:%s, IDP:%IDP, SP:%SP, i:%i, ac:%ac, t:%t, attr:%attr, n:%n, b:%b, E:%E, S:%S, SS:%SS, L:%L, UA:%UA, a:%a" />
+
+    <!-- this SP is behind a BigIP proxy -->
+    <!--RequestMapper type="Native">
+        <RequestMap applicationId="default" REMOTE_ADDR="X-Forwarded-For"/>
+    </RequestMapper-->
+
+
+    <RequestMapper type="XML">
+      <RequestMap>
+        <Host name="${SERVER_NAME}"
+              authType="shibboleth" requireSession="true">
+              <Path name="/generateToken"/>
+        </Host>
+      </RequestMap>
+    </RequestMapper>
+
+
+    <!-- The ApplicationDefaults element is where most of Shibboleth's SAML bits are defined. -->
+    <ApplicationDefaults entityID="${SP_ENTITY_ID}"
+        REMOTE_USER="mail eppn persistent-id targeted-id"
+        cipherSuites="HIGH:!MD5:!RC4:!aNULL">
+
+        <!--
+        Controls session lifetimes, address checks, cookie handling, and the protocol handlers.  -->
+        <Sessions lifetime="28800" timeout="3600" relayState="ss:mem"
+            checkAddress="false" consistentAddress="false"
+            handlerSSL="true" cookieProps="https" sameSiteSession="None" >
+
+            <SSO entityID="${SSO_URL}"> SAML2 </SSO>
+          
+            <!-- SAML and local-only logout. -->
+            <Logout>SAML2 Local</Logout>
+
+            <!-- Administrative logout. -->
+            <LogoutInitiator type="Admin" Location="/Logout/Admin" acl="127.0.0.1 ::1" />
+
+            <!-- Extension service that generates "approximate" metadata based on SP configuration. -->
+            <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/>
+
+            <!-- Status reporting service. -->
+            <Handler type="Status" Location="/Status" acl="127.0.0.1 ::1 193.49.159.128/26 10.45.0.0/16 10.46.0.0/16"/>
+
+            <!-- Session diagnostic service. -->
+            <Handler type="Session" Location="/Session" showAttributeValues="true"/>
+
+            <!-- JSON feed of discovery information. -->
+            <Handler type="DiscoveryFeed" Location="/DiscoFeed"/>
+        </Sessions>
+
+        <!-- Map to extract attributes from SAML assertions. -->
+        <AttributeExtractor type="XML" validate="true" reloadChanges="false" path="attribute-map.xml"/>
+
+        <!-- Use a SAML query if no attributes are supplied during SSO. -->
+        <AttributeResolver type="Query" subjectMatch="true"/>
+
+        <!-- Default filtering policy for recognized attributes, lets other data pass. -->
+        <AttributeFilter type="XML" validate="true" path="attribute-policy.xml"/>
+
+      	<MetadataProvider type="XML"
+         		 url="${METADATA_URL}"
+         		 backingFilePath="idp-metadata.xml" reloadInterval="7200">
+        </MetadataProvider>
+
+        <!-- Simple file-based resolver for using a single keypair. -->
+        <CredentialResolver type="File" key="sp-key.pem" certificate="sp-cert.pem"/>
+
+    </ApplicationDefaults>
+
+    <!-- Policies that determine how to process and authenticate runtime messages. -->
+    <SecurityPolicyProvider type="XML" validate="true" path="security-policy.xml"/>
+
+    <!-- Low-level configuration about protocols and bindings available for use. -->
+    <ProtocolProvider type="XML" validate="true" reloadChanges="false" path="protocols.xml"/>
+
+</SPConfig>
