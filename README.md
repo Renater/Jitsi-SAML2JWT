@@ -5,7 +5,9 @@ Jitsi-SAML2JWT is a project to easily use SAML authentification with JWT the new
 
 ## Motivation
 
-The legacy Shibboleth auth mecanisme in Jitsi Jicofo will be removed by the Big Jitsi Auth Refactoring (see this [post](https://community.jitsi.org/t/intent-to-deprecate-and-remove-external-auth-mechanisms/115332) ). So to continue to use SAML with Jitsi, we need a independent system securised by SAML protocol to generate the JWT token.
+The legacy Shibboleth auth mecanisme in Jitsi Jicofo will be removed by the Big Jitsi Auth Refactoring (see this [post](https://community.jitsi.org/t/intent-to-deprecate-and-remove-external-auth-mechanisms/115332) ).
+
+So to continue to use SAML with Jitsi, we need a independent system securised by SAML protocol to generate the JWT token.
 
 This project provides 2 things : 
  - a simple JWT generator written in PHP using authentification informations provided by an external SAML Proxy SP.
