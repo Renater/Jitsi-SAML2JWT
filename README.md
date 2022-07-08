@@ -1,21 +1,21 @@
 # Jitsi-SAML2JWT
 
-Jitsi-SAML2JWT is a project to easily use SAML authentification with JWT the new recommended Jitsi-Meet authentification mecanisms. 
+Jitsi-SAML2JWT is a project to easily use SAML authentification with JWT, the new recommended Jitsi-Meet authentification mechanism. 
 
 
 ## Motivation
 
-The legacy Shibboleth auth mecanisme in Jitsi Jicofo will be removed by the Big Jitsi Auth Refactoring (see this [post](https://community.jitsi.org/t/intent-to-deprecate-and-remove-external-auth-mechanisms/115332)).
+The legacy Shibboleth auth mechanism in Jitsi Jicofo will be removed by the Big Jitsi Auth Refactoring (see this [post](https://community.jitsi.org/t/intent-to-deprecate-and-remove-external-auth-mechanisms/115332)).
 
 So to continue to use SAML with Jitsi, we need a independent system securised by SAML protocol to generate the JWT token.
 
 This project provides 2 things : 
  - a simple JWT generator written in PHP using authentification informations provided by an external SAML Proxy SP.
- - a full running Docker file to deploy the token generator and a Shibboleth SAML SP (because sometime it seems complex to deploy Shibboleth by hand :) ).  
+ - a full running Docker file to deploy the token generator and a Shibboleth SAML SP because sometime it seems complex to deploy Shibboleth by hand.  
 
 ## Auhtentification Principle
 
-This authentification call flow with a SAML SP and the JWT server looks like this : 
+The authentification call flow with a SAML SP and the JWT server looks like this : 
 
 <img src="doc/auth_call_flow.svg" width=70% height=70%>
 
@@ -26,8 +26,7 @@ Before any installation you should create the jitsi-SAML2JWT.env file with your 
 > mv config/jitsi-SAML2JWT.env_ref conf/jitsi-SAML2JWT.env
 ```
 
-
-Then you should run generate_config_file.sh in tools directory.
+Then you must run generate_config_file.sh in tools directory.
 
 ```
 > cd tools
@@ -38,7 +37,7 @@ Then you should run generate_config_file.sh in tools directory.
 
 ### Stand Alone JWT generator 
 
-You only need to file sections JWT Token Generator and Web server.
+You only need to fill sections JWT Token Generator and Web server.
 
 ```
 #JWT Token Generator
@@ -57,7 +56,7 @@ SERVER_NAME=jitsi-auth.meet
 
 ### SAML SP and JWT Generator
 
-You need to file all sections.
+You need to fill all sections.
 
 ```
 #Shibboleth
@@ -76,7 +75,7 @@ SERVER_NAME=jitsi-auth.meet
 ```
 
 
-- `SHIBBOLETH_TEMPLATE_XML` with shibboleth2.xml template to use (direct idp, with a discovery service, a prebuild federation one).
+- `SHIBBOLETH_TEMPLATE_XML` with shibboleth2.xml template to use (direct idp, with a discovery service or a prebuild federation one).
 - `SP_ENTITY_ID` with the Identity of your SAML Service Provider.
 - `METADATA_URL` with the remote SAML metadata information url (idp or provided by a federation). 
 - `SSO_URL` with the target SAML SSO url for user redirection (idp or a discovery service). 
@@ -102,7 +101,7 @@ We provide a script to generate selfsigned certificat for Apache and Shibboleth.
 If you want, you can use your own certificate by setting it in conf/cert directory (apache.pem for apache and s-cert.pem and sp-cert.key for Shibboleth).
 
 ### Stand Alone JWT generator
-This instalaltion script supposed you run it on a debian like operarting system (Ubuntu >= 18 or Debian >= 11 ).
+This instalaltion script supposed you run it on a debian like operarting system (Ubuntu >= 18 or Debian >= 11).
 
 ```
 > cd tools
@@ -123,7 +122,7 @@ docker run --rm -d  -p 443:443/tcp -p 80:80/tcp shib2jwt:latest
 ```
 
 
-You also need to provide your sp-cert.pem and your Service Provider Metdata url (https://[SERVER_NAME]/Shibboleth.sso/SAML2/POST)  informations to the remote IDP or Federation registry.
+You also need to provide your sp-cert.pem and your Service Provider Metdata url (https://[SERVER_NAME]/Shibboleth.sso/SAML2/POST) informations to the remote IDP or Federation registry.
 
 
 ## Jitsi configuration to use JWT
@@ -134,4 +133,4 @@ With Jitsi-Meet Docker version :
 - Set `JWT_APP_ID`  with prosody application identifier.
 - To redirect from jitsi to login set the url of this container`TOKEN_AUTH_URL=https://[server_name]/generateToekn?room={room}`
 
-If you don't use Docker version check with community post [jitsi-meet-tokens-chronicles](https://community.jitsi.org/t/jitsi-meet-tokens-chronicles-on-debian-buster/76756/3).
+If you don't use Docker version, check with community post [jitsi-meet-tokens-chronicles](https://community.jitsi.org/t/jitsi-meet-tokens-chronicles-on-debian-buster/76756/3).
