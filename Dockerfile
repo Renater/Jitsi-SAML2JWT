@@ -24,6 +24,10 @@ RUN cd /usr/local/jitsi-SAML2JWT/lib\
 
 EXPOSE 80 443
 
+# redirect apache logs to docker stdout/stderr
+RUN ln -sf /proc/1/fd/1 /var/log/apache2/access.log
+RUN ln -sf /proc/1/fd/2 /var/log/apache2/error.log
+
 COPY entrypoint.sh /var/
 RUN chmod +x /var/entrypoint.sh
 

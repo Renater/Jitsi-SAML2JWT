@@ -6,5 +6,9 @@
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 10000 -nodes -subj '/CN='$SERVER_NAME
 cat key.pem cert.pem > apache.pem
 
+
+if [ ! -d "../config/cert/" ]; then
+  mkdir ../config/cert/
+fi
 mv apache.pem  ../config/cert
 rm key.pem cert.pem

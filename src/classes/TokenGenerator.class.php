@@ -41,7 +41,7 @@ class TokenGenerator {
             ],
             'iss'  => $config['token_generator']['app_id'],
             'aud'  => $config['token_generator']['app_id'],
-            'sub'  => $config['jitsi_domain'],
+            'sub'  => explode(':',$config['jitsi_domain'])[0],
             'room' => '*'
         ];
         $key = $config['token_generator']['key'];
