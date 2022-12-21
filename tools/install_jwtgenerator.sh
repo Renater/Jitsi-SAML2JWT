@@ -6,6 +6,7 @@ apt install software-properties-common -y
 
 # Install apache
 sudo apt-get -y install apache2
+sudo cp ../config/cert/apache.pem /etc/apache2/
 sudo cp ../config/jitsi-auth.conf /etc/apache2/sites-available/jitsi-auth.conf
 rm jitsi-auth.conf
 sudo a2ensite jitsi-auth.conf
