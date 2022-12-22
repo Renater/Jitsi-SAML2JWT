@@ -30,5 +30,9 @@ EOT
 
 openssl req -new -x509 -config sp-cert.cnf -text -out sp-cert.pem -days 3650
 
+if [ ! -d "../config/cert/" ]; then
+  mkdir ../config/cert/
+fi
+
 rm sp-cert.cnf
 mv sp-* ../config/cert
