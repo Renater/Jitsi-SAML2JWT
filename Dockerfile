@@ -1,6 +1,6 @@
 FROM debian:stable-slim
 
-RUN apt update && apt-get -y install curl\
+RUN apt update && apt-get -y install curl gettext-base\
     && curl https://pkg.switch.ch/switchaai/debian/dists/buster/main/binary-all/misc/switchaai-apt-source_1.0.0_all.deb > switchaai-apt-source_1.0.0_all.deb \
     && apt-get install ./switchaai-apt-source_1.0.0_all.deb\
     && apt-get update\
@@ -8,14 +8,7 @@ RUN apt update && apt-get -y install curl\
     && apt-get -y install php php-mysql php-mbstring php-gmp composer zip unzip php-zip
 
 
-COPY config/cert/sp* /etc/shibboleth/
-COPY config/shibboleth2.xml /etc/shibboleth/
 COPY config/attribute-map.xml /etc/shibboleth/
-COPY config/jitsi-auth.conf /etc/apache2/sites-available/jitsi-auth.conf
-COPY config/cert/apache.pem /etc/apache2
-
-RUN a2ensite jitsi-auth.conf\
-    && a2enmod ssl
 
 COPY . /usr/local/jitsi-SAML2JWT/
 RUN cd /usr/local/jitsi-SAML2JWT/lib\

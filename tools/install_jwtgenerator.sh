@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+bash generate_config
+
 # Install script for JWT token Generator running behind and existing SAML Proxy SP.
 apt update
 apt install software-properties-common -y

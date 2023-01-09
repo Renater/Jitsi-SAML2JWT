@@ -1,5 +1,5 @@
-#!/bin/sh
-. ../config/jitsi-SAML2JWT.env
+#!/bin/bash
+. ../.env
 
 ENV=$SP_ENTITY_ID
 
