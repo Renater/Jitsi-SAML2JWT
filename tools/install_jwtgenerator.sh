@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-bash generate_config
+bash generate_config_file.sh
 
 # Install script for JWT token Generator running behind and existing SAML Proxy SP.
 apt update
@@ -20,9 +20,6 @@ sudo systemctl start apache2.service
 
 # Install PHP and run composer
 cp -r .. /usr/local/jitsi-SAML2JWT
-rm -rf /usr/local/jitsi-SAML2JWT/config/template
-rm -rf /usr/local/jitsi-SAML2JWT/config/cert
-
 cd /usr/local/jitsi-SAML2JWT/lib
 sudo apt -y install php php-mysql php-mbstring php-gmp composer zip unzip php-zip
 export COMPOSER_ALLOW_SUPERUSER=1; composer install
