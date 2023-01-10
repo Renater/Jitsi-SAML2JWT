@@ -61,7 +61,7 @@ SERVER_NAME=jitsi-auth.meet
 We provide a script to generate selfsigned certificat for Apache and Shibboleth because SAML certificate auth needs to be share with IDP or federation Metadata.
 ```
 > cd tools
-> sh init_certificates.sh
+> bash init_certificates.sh
 ```
 
 ## Stand Alone JWT generator
@@ -69,7 +69,7 @@ This instalaltion script supposed you run it on a debian like operarting system 
 
 ```
 > cd tools
-> sh install_jwtgenerator.sh
+> bash install_jwtgenerator.sh
 ```
 
 
@@ -77,15 +77,10 @@ This instalaltion script supposed you run it on a debian like operarting system 
 
 Build Docker Image :
 ```
-docker image build -t shib2jwt .
+docker image build -t jitisaml2jwt .
 ```
 
-Start the docker container : 
-```
-docker run --rm -d  -p 443:443/tcp -p 80:80/tcp shib2jwt:latest
-```
-
-Start the docker compose : 
+Start with docker compose : 
 ```
 docker compose up -d
 ```
