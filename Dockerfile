@@ -10,7 +10,11 @@ RUN apt update && apt-get -y install curl gettext-base\
 
 COPY config/attribute-map.xml /etc/shibboleth/
 
-COPY . /usr/local/jitsi-SAML2JWT/
+RUN mkdir /usr/local/jitsi-SAML2JWT
+COPY ./src /usr/local/jitsi-SAML2JWT/src
+COPY ./lib /usr/local/jitsi-SAML2JWT/lib
+COPY ./config /usr/local/jitsi-SAML2JWT/config
+
 RUN cd /usr/local/jitsi-SAML2JWT/lib\
     && composer install -n \
     && rm -rf /var/lib/apt/lists/*
