@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-. ../config/jitsi-SAML2JWT.env
+. ../.env
 
 export SERVER_NAME 
 export SHIBBOLETH_TEMPLATE_XML 
@@ -15,19 +15,19 @@ export config='$config'
 
 echo "ServerName $SERVER_NAME"
 
-echo "Generating config File from template and jitsi-SAML2JWT.env file"
+echo "Generating config File from template and .env file"
 
 echo "PHP Token file"
 cat ../config/template/config.php | envsubst > ../config/config.php
 
-if [ -z  "$SP_ENTITY_ID" ]
+if [ $ENABLE_SHIBBOLETH = "true" ]
 then
-echo "Apache File"
-cat ../config/template/jwtgenerator.conf | envsubst > ../config/jitsi-auth.conf
-else
-echo "Apache File"
+echo "Apache ans Hibboleth File for JWT and SAML SP"
 cat ../config/template/jwtgenerator-sp.conf | envsubst > ../config/jitsi-auth.conf
 echo "Shibboleth file"
 cat ../config/template/$SHIBBOLETH_TEMPLATE_XML | envsubst > ../config/shibboleth2.xml
+else
+echo "Apache File for stand alone JWT"
+cat ../config/template/jwtgenerator.conf | envsubst > ../config/jitsi-auth.conf
 fi
 echo "Generation Done"

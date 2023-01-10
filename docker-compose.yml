@@ -1,0 +1,19 @@
+services:
+  jwt_server:
+    image: jitsisaml2jwt
+    build:
+        context: jitsisaml2jwt
+    container_name: jitsisaml2jwt
+    volumes:
+#     - ./config/cert/apache.pem:/etc/apache2/apache2.pem
+      - ./config/cert/sp-cert.pem:/etc/shibboleth/sp-cert.pem
+      - ./config/cert/sp-key.pem:/etc/shibboleth/sp-key.pem
+    ports:
+      - "8080:80"
+      - "8443:443"
+    logging:
+      driver: syslog
+      options:
+        tag: "jitsisaml2jwt"
+    env_file:
+      - .env

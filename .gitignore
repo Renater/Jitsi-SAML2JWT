@@ -3,3 +3,4 @@ config/cert/*
 config/config.php
 config/shibboleth2.xml
 config/jitsi-auth.conf
+.env
