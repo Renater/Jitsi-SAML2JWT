@@ -66,6 +66,7 @@ We provide a script to generate selfsigned certificat for Apache and Shibboleth 
 
 ## Stand Alone JWT generator
 This instalaltion script supposed you run it on a debian like operarting system (Ubuntu >= 18 or Debian >= 11).
+You can run init_certificates.sh before installing the jwt server or provide your own certificat for apache in the conf/cert/apache.pem file.
 
 ```
 > cd tools
