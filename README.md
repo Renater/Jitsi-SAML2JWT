@@ -78,7 +78,7 @@ You can run init_certificates.sh before installing the jwt server or provide you
 
 Build Docker Image :
 ```
-docker image build -t jitisaml2jwt .
+docker image build -t jitsisaml2jwt .
 ```
 
 We also provide Docker image on DockerHub : [https://hub.docker.com/r/renater/jitisaml2jwt].
@@ -99,6 +99,26 @@ With Jitsi-Meet Docker version :
 - Set `ENABLE_AUTH=1`, `AUTH_TYPE=jwt` and 
 - Set `JWT_APP_SECRET`      with prosody application secret known only to your token.
 - Set `JWT_APP_ID`  with prosody application identifier.
-- To redirect from jitsi to login set the url of this container`TOKEN_AUTH_URL=https://[server_name]/generateToken?room={room}`
+- To redirect from jitsi to login set the url of this container`TOKEN_AUTH_URL=https://[server_name]/redirectWithToken?room={room}`
 
 If you don't use Docker version, check with community post [jitsi-meet-tokens-chronicles](https://community.jitsi.org/t/jitsi-meet-tokens-chronicles-on-debian-buster/76756/3).
+
+## JItsi-SAML2JWT Request description
+
+Sample request : 
+
+https://[server_name]/getToken?room=Test&validity_timestamp=validity_timestamp=1674645573
+
+Available request:
+
+| Request                        | Description                                                                       | Return  | 
+|--------------------------------|-----------------------------------------------------------------------------------|:--------|
+| /redirectWithToken              | Redirect to the configured jitsi instance adding the JWT token in destination     |         |
+| /getToken                       | Get a valid Token                                                                 |  string |
+
+Available parameters:
+
+| Key                            | Description                                                                                                                                  | Mandatory |    Type | Default value |
+|--------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|:---------:|--------:|---------------|
+| room                           | Restrict token to the specified room                                                                                                         |           |  string | *             |
+| validity_timestamp             | Set the max validity timlestamp of the JWT token zccording to https://www.rfc-editor.org/rfc/rfc7519#section-4.1.4 (0 for unlimited Token)   |           |  int    | 0             |

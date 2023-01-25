@@ -10,10 +10,8 @@ require_once('../init.php');
 try {
     $tokenGenerator = new TokenGenerator();
     $jsonResp =  $tokenGenerator->getToken($_SERVER,$_REQUEST);
-    $room=$_GET['room'];
-    $URL="https://".$config['jitsi_domain']."/".$room."?jwt=".$jsonResp;
-    header("Location: $URL", true, 301); 
-    return;
+    echo $jsonResp;
+    return ;
 } catch (Exception $e){
     error_log($e->getMessage());
     RestResponse::send($e->getMessage(), 500);

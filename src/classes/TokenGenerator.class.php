@@ -24,11 +24,33 @@ class TokenGenerator {
         return $decoded;
     }
 
-    public function getToken(Array $envData): string {
+    public function getToken(Array $envData,Array $requestData): string {
         global $config;
         
-        $displayName = $envData['HTTP_DISPLAYNAME'];
-        $email = $envData['HTTP_MAIL'];
+        if (array_key_exists('HTTP_DISPLAYNAME',$envData))
+            $displayName = $envData['HTTP_DISPLAYNAME'];
+        else 
+           $displayName = "anonymous";
+
+        if (array_key_exists('HTTP_MAIL',$envData))
+            $email = $envData['HTTP_MAIL'];    
+        else {
+            error_log("No Email Provided in Headers, we can genrate a token", 0);
+            return "";
+        }
+            
+
+        if (array_key_exists('room',$requestData))
+            $room=$requestData['room'];
+        else 
+            $room='*';
+
+        if (array_key_exists('validity_timestamp',$requestData))
+            $validity=$requestData['validity_timestamp'];
+        else 
+            $validity=0;
+
+
         $gravatarHash = md5( strtolower( trim( $email  ) ) ); 
 
         $payload = [
@@ -42,8 +64,11 @@ class TokenGenerator {
             'iss'  => $config['token_generator']['app_id'],
             'aud'  => $config['token_generator']['app_id'],
             'sub'  => explode(':',$config['jitsi_domain'])[0],
-            'room' => '*'
+            'room' => $room
         ];
+        if ($validity>0)
+            $payload['exp']=$validity;
+
         $key = $config['token_generator']['key'];
 
         $token = $this->generateHS256Token($payload,$key);
