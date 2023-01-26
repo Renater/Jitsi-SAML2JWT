@@ -8,7 +8,7 @@ use Firebase\JWT\Key;
 
 
 /**
- * Class DBI add facilities for database usage
+ * Class TokenGenerator to generate JWT token
  */
 class TokenGenerator {
     
@@ -46,7 +46,7 @@ class TokenGenerator {
             $room='*';
 
         if (array_key_exists('validity_timestamp',$requestData))
-            $validity=$requestData['validity_timestamp'];
+            $validity=intval($requestData['validity_timestamp']);
         else 
             $validity=0;
 
@@ -77,11 +77,4 @@ class TokenGenerator {
 
     }
 
-    public function decodeToken(string $tokenEncrypted): string {
-        $result = $this->decode($tokenEncrypted,$key);
-        $key = "my_jitsi_secret";
-        return $token;
-    }
 }
-
-
