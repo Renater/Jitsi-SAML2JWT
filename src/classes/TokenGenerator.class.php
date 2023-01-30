@@ -59,6 +59,10 @@ class TokenGenerator {
                     'avatar' => "https://www.gravatar.com/avatar/$gravatarHash?d=404&size=200",
                     'name'   => $displayName,
                     'email'  => $email
+                ],
+                'features' => [
+                    'livestreaming' => false,
+                    'recording'     => true
                 ]
             ],
             'iss'  => $config['token_generator']['app_id'],
