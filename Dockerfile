@@ -1,10 +1,8 @@
 FROM debian:stable-slim
 
 RUN apt update && apt-get -y install curl gettext-base\
-    && curl https://pkg.switch.ch/switchaai/debian/dists/buster/main/binary-all/misc/switchaai-apt-source_1.0.0_all.deb > switchaai-apt-source_1.0.0_all.deb \
-    && apt-get install ./switchaai-apt-source_1.0.0_all.deb\
     && apt-get update\
-    && apt-get install -y --install-recommends apache2 shibboleth\
+    && apt-get install -y --install-recommends apache2 libapache2-mod-shib shibboleth-sp-common shibboleth-sp-utils\
     && apt-get -y install php php-mysql php-mbstring php-gmp composer zip unzip php-zip
 
 
