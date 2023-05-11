@@ -12,7 +12,7 @@ try {
     $jsonResp =  $tokenGenerator->getToken($_SERVER,$_REQUEST);
     $room=$_GET['room'];
     $URL="https://".$config['jitsi_domain']."/".$room."?jwt=".$jsonResp;
-    header("Location: $URL", true, 301); 
+    header("Location: $URL", true, 302); 
     return;
 } catch (Exception $e){
     error_log($e->getMessage());
