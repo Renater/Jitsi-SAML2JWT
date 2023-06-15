@@ -45,6 +45,11 @@ class TokenGenerator {
         else 
             $room='*';
 
+        if (array_key_exists('tenant',$requestData))
+            $tenant=rtrim($requestData['tenant'],"/");
+        else 
+            $tenant=explode(':',$config['jitsi_domain'])[0];
+
         if (array_key_exists('validity_timestamp',$requestData))
             $validity=intval($requestData['validity_timestamp']);
         else 
@@ -67,7 +72,7 @@ class TokenGenerator {
             ],
             'iss'  => $config['token_generator']['app_id'],
             'aud'  => $config['token_generator']['app_id'],
-            'sub'  => explode(':',$config['jitsi_domain'])[0],
+            'sub'  => $tenant,
             'room' => $room
         ];
         if ($validity>0)

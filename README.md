@@ -100,6 +100,7 @@ With Jitsi-Meet Docker version :
 - Set `JWT_APP_SECRET`      with prosody application secret known only to your token.
 - Set `JWT_APP_ID`  with prosody application identifier.
 - To redirect from jitsi to login set the url of this container`TOKEN_AUTH_URL=https://[server_name]/redirectWithToken?room={room}`
+- To redirect from jitsi to login with tenant set `TOKEN_AUTH_URL=https://[server_name]/generateToken?room={room}&subdir='+subdir+'`
 
 If you don't use Docker version, check with community post [jitsi-meet-tokens-chronicles](https://community.jitsi.org/t/jitsi-meet-tokens-chronicles-on-debian-buster/76756/3).
 
@@ -121,4 +122,5 @@ Available parameters:
 | Key                            | Description                                                                                                                                  | Mandatory |    Type | Default value |
 |--------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|:---------:|--------:|---------------|
 | room                           | Restrict token to the specified room                                                                                                         |           |  string | *             |
+| tenant                         | Restrict token and redirect to the specified teant                                                                                           |           |  string | empty         |
 | validity_timestamp             | Set the max validity timlestamp of the JWT token zccording to https://www.rfc-editor.org/rfc/rfc7519#section-4.1.4 (0 for unlimited Token)   |           |  int    | 0             |
