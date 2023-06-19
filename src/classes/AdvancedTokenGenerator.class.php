@@ -14,7 +14,7 @@ class AdvancedTokenGenerator extends TokenGenerator{
 
     private static function generateId(string $input, int $length = 8): string {
         $hashBase64 = base64_encode(hash('sha256', $input, true));
-        $hashSafeUrl = strtr($hashBase64, '+/', '-');
+        $hashSafeUrl = strtr($hashBase64, '+/', '--');
         $hashSafeUrl = rtrim($hashSafeUrl, '=');
         return substr($hashSafeUrl, 0, $length);
     }
