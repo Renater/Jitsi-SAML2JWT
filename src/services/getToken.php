@@ -8,7 +8,10 @@ require_once('../init.php');
 
 
 try {
-    $tokenGenerator = new TokenGenerator();
+    if ($config['token_generator']['token_mode'] == 'advanced')
+        $tokenGenerator = new AdvancedTokenGenerator();    
+    else 
+        $tokenGenerator = new TokenGenerator(); 
     $jsonResp =  $tokenGenerator->getToken($_SERVER,$_REQUEST);
     echo $jsonResp;
     return ;

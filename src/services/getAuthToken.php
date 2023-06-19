@@ -8,10 +8,13 @@ require_once('../init.php');
 
 
 try {
-    $tokenGenerator = new TokenGenerator();
+    if ($config['token_generator']['token_mode'] == 'advanced')
+        $tokenGenerator = new AdvancedTokenGenerator();    
+    else 
+        $tokenGenerator = new TokenGenerator();
     $jsonResp =  $tokenGenerator->getToken($_SERVER,$_REQUEST);
     $room=$_GET['room'];
-    $subdir=$_GET['tenant'];
+    $tenant=$_GET['tenant'];
     $URL="https://".$config['jitsi_domain']."/".$tenant.$room."?jwt=".$jsonResp;
     header("Location: $URL", true, 302); 
     return;
