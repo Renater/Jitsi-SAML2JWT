@@ -11,7 +11,7 @@ try {
     $tokenGenerator = new TokenGenerator();
     $jsonResp =  $tokenGenerator->getToken($_SERVER,$_REQUEST);
     $room=$_GET['room'];
-    $subdir=$_GET['tenant'];
+    $tenant=$_GET['tenant'];
     $URL="https://".$config['jitsi_domain']."/".$tenant.$room."?jwt=".$jsonResp;
     header("Location: $URL", true, 302); 
     return;
