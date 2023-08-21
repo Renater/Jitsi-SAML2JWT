@@ -10,6 +10,8 @@ export SSO_URL
 export JITSI_DOMAIN 
 export JWT_APP_SECRET
 export JWT_APP_ID 
+export JWT_TOKEN_MODE 
+
 export config='$config'
 
 

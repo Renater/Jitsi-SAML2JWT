@@ -8,7 +8,7 @@ require_once('../init.php');
 
 
 try {
-    if ($config['token_generator']['token_mode'] == 'advanced')
+    if (array_key_exists('token_mode',$config['token_generator']) && $config['token_generator']['token_mode'] == 'advanced')
         $tokenGenerator = new AdvancedTokenGenerator();    
     else 
         $tokenGenerator = new TokenGenerator(); 
