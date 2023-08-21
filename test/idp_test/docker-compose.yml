@@ -1,0 +1,15 @@
+services:
+  saml_idp_test_server:
+    container_name: saml_idp_test
+    image: saml_idp_test
+    ports:
+      - "8085:80"
+    volumes:
+      - ../../config/cert/sp-cert.pem:/sp-cert.pem
+    logging:
+      driver: syslog
+      options:
+        tag: "saml_idp_test"
+    environment:
+      SERVER_NAME : saml_idp_test
+      AUTH_SP_JWT: 127.0.0.1:8449

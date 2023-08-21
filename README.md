@@ -40,6 +40,7 @@ SSO_URL=http://saml2/idp/sso
 JITSI_DOMAIN=my.jitsi.meet
 JWT_GENERATOR_KEY=my_jitsi_app_secret
 JWT_APP_ID=my_jitsi_app_id
+JWT_TOKEN_MODE=default
 
 #Web server
 SERVER_NAME=jitsi-auth.meet
@@ -54,6 +55,7 @@ SERVER_NAME=jitsi-auth.meet
 - `JITSI_DOMAIN` with the target Jitsi-Meet prosody virtual host. 
 - `JWT_APP_SECRET` with prosody application secret known only to your token.
 - `JWT_APP_ID` with prosody application identifier.
+- `JWT_TOKEN_MODE` with default to use a simple token generator based only on email check or advanced to add affiliation and private features.
 - `SERVER_NAME` with web server name of your token generator.
 
 ## Generate certificates 
@@ -100,7 +102,7 @@ With Jitsi-Meet Docker version :
 - Set `JWT_APP_SECRET`      with prosody application secret known only to your token.
 - Set `JWT_APP_ID`  with prosody application identifier.
 - To redirect from jitsi to login set the url of this container`TOKEN_AUTH_URL=https://[server_name]/redirectWithToken?room={room}`
-- To redirect from jitsi to login with tenant set `TOKEN_AUTH_URL=https://[server_name]/generateToken?room={room}&subdir='+subdir+'`
+- To redirect from jitsi to login with tenant set `TOKEN_AUTH_URL=https://[server_name]/redirectWithToken?room={room}&tenant='+subdir+'`
 
 If you don't use Docker version, check with community post [jitsi-meet-tokens-chronicles](https://community.jitsi.org/t/jitsi-meet-tokens-chronicles-on-debian-buster/76756/3).
 

@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:buster-slim
 
 RUN apt update\
     && apt-get install -y --install-recommends apache2 curl\
@@ -13,13 +13,17 @@ COPY config/* /var/simplesamlphp/
 RUN touch /var/simplesamlphp/modules/exampleauth/enable
 
 COPY config/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY config/ports.conf /etc/apache2/ports.conf
+
+RUN a2ensite 000-default.conf
+RUN a2enmod ssl
 
 
 RUN cd /var/simplesamlphp/cert \
     && openssl req -x509 -newkey rsa:2048 -nodes -keyout server.pem -out server.crt -days 3650 -subj '/CN=idp.rendez-vous.renater.fr' \
     && chmod 666 server*
 
-EXPOSE 80
+EXPOSE 9443
 
 # redirect apache logs to docker stdout/stderr
 RUN ln -sf /proc/1/fd/1 /var/log/apache2/access.log

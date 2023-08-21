@@ -14,6 +14,8 @@
       <RequestMap>
         <Host name="${SERVER_NAME}"
               authType="shibboleth" requireSession="true">
+              <Path name="/redirectWithToken"/>
+              <Path name="/getToken"/>
               <Path name="/generateToken"/>
         </Host>
       </RequestMap>

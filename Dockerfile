@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:bullseye-slim
 
 RUN apt update && apt-get -y install curl gettext-base\
     && apt-get update\

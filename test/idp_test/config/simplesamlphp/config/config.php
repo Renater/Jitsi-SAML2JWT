@@ -27,7 +27,7 @@ $config = [
      * external url, no matter where you come from (direct access or via the
      * reverse proxy).
      */
-    'baseurlpath' => 'simplesaml/',
+    'baseurlpath' => "simplesaml/",
 
     /*
      * The 'application' configuration array groups a set configuration options
@@ -175,7 +175,7 @@ $config = [
      * Example:
      *   'trusted.url.domains' => ['sp.example.com', 'app.example.com'],
      */
-    'trusted.url.domains' => [],
+    'trusted.url.domains' => [getEnv('SERVER_NAME')],
 
     /*
      * Enable regular expression matching of trusted.url.domains.
@@ -559,7 +559,7 @@ $config = [
      * through https. If the user can access the service through
      * both http and https, this must be set to FALSE.
      */
-    'session.cookie.secure' => false,
+    'session.cookie.secure' => true,
 
     /*
      * Set the SameSite attribute in the cookie.
@@ -571,7 +571,7 @@ $config = [
      * Example:
      *  'session.cookie.samesite' => 'None',
      */
-    'session.cookie.samesite' => null,
+    'session.cookie.samesite' => 'None',
 
     /*
      * Options to override the default settings for php sessions.
