@@ -66,7 +66,7 @@ class AdvancedTokenGenerator extends TokenGenerator{
             $affiliation='none';
 
         // private 
-        if (array_key_exists('tenant',$requestData) && str_contains($tenant,"private")){
+        if (array_key_exists('tenant',$requestData) && strpos($tenant,"private") !== false ){
             if ( !$this->emailValidConference($room,$email) )
                 return '';
         }
