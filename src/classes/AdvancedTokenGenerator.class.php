@@ -20,7 +20,7 @@ class AdvancedTokenGenerator extends TokenGenerator{
     }
 
     public function emailValidConference(string $room, string $email){
-        $room_pattern = "/.(*)__(.*)_[0-9a-f]{6}-[0-9a-f]{6}-[0-9a-f]{6}$/";
+        $room_pattern = "/(.*)__(.*)_[0-9a-f]{6}-[0-9a-f]{6}-[0-9a-f]{6}$/";
         if (preg_match($room_pattern, $room, $match)){
             $roomName = $match[1];
             $uid = $match[2];
