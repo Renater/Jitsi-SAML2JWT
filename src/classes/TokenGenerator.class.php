@@ -27,13 +27,15 @@ class TokenGenerator {
     public function getToken(Array $envData,Array $requestData): string {
         global $config;
         
+        $displayName = "anonymous";
         if (array_key_exists('HTTP_DISPLAYNAME',$envData))
             $displayName = $envData['HTTP_DISPLAYNAME'];
-        else 
-           $displayName = "anonymous";
-
-        if (array_key_exists('HTTP_MAIL',$envData))
+            
+        if (array_key_exists('HTTP_MAIL',$envData)){
             $email = $envData['HTTP_MAIL'];    
+            if ($displayName=="anonymous")
+                 $displayName =  $email;
+        } 
         else {
             error_log("No Email Provided in Headers, we can genrate a token", 0);
             return "";
