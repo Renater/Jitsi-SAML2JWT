@@ -35,6 +35,7 @@ SHIBBOLETH_TEMPLATE_XML=shibboleth2_sp_direct_idp.xml
 SP_ENTITY_ID=jitsi-auth
 METADATA_URL=http://saml2/idp/metadata
 SSO_URL=http://saml2/idp/sso
+ENABLE_BACKEND_JWT_REQUEST=false
 
 #JWT Token Generator
 JITSI_DOMAIN=my.jitsi.meet
@@ -51,6 +52,8 @@ SERVER_NAME=jitsi-auth.meet
 - `SP_ENTITY_ID` with the Identity of your SAML Service Provider.
 - `METADATA_URL` with the remote SAML metadata information url (idp or provided by a federation). 
 - `SSO_URL` with the target SAML SSO url for user redirection (idp or a discovery service). 
+- `ENABLE_BACKEND_JWT_REQUEST` enable a extra port (8443) fro the getToken request not protected by the shibboleth SP. It shoud only be open to some backend server trafic. 
+
 
 - `JITSI_DOMAIN` with the target Jitsi-Meet prosody virtual host. 
 - `JWT_APP_SECRET` with prosody application secret known only to your token.

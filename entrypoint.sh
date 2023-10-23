@@ -13,6 +13,11 @@ then
     echo "Apache with SP File"
     cat $CONFIG_DIR/template/jwtgenerator-sp.conf | envsubst > /etc/apache2/sites-available/jitsi-auth.conf
 
+    if [ $ENABLE_BACKEND_JWT_REQUEST = "true" ]
+    then
+        cp $CONFIG_DIR/template/ports.conf /etc/apache2/ports.conf
+    fi
+
     if [ ! -f /etc/shibboleth/sp-cert.pem ]
     then
         echo "You must provide your certificate for runnning this container. You can run tools/generate_certe_sp.sh to generate a self signed one."

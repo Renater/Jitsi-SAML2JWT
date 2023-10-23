@@ -17,7 +17,7 @@ RUN cd /usr/local/jitsi-SAML2JWT/lib\
     && composer install -n \
     && rm -rf /var/lib/apt/lists/*
 
-EXPOSE 80 443
+EXPOSE 80 443 8443
 
 # redirect apache logs to docker stdout/stderr
 RUN ln -sf /proc/1/fd/1 /var/log/apache2/access.log
