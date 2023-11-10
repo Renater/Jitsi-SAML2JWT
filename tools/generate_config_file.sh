@@ -11,6 +11,7 @@ export JITSI_DOMAIN
 export JWT_APP_SECRET
 export JWT_APP_ID 
 export JWT_TOKEN_MODE 
+export AUTH_ERROR_PAGE
 
 export config='$config'
 

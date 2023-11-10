@@ -10,6 +10,7 @@ $config['token_generator'] = array(
 
 $config['jitsi_domain'] = '${JITSI_DOMAIN}';
 
+$config['auth_error_page'] = '${AUTH_ERROR_PAGE}';
 
 $config['syslog'] = array(
     'enabled' => false,

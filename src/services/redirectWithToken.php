@@ -20,9 +20,13 @@ try {
     if(array_key_exists('jitsi_meet_external_api_id',$_REQUEST)){
         $extra.="jitsi_meet_external_api_id=";
         $extra.=$_REQUEST['jitsi_meet_external_api_id'];
+        $extra.="#config.prejoinConfig.enabled=false";
     }
-         
-    $URL="https://".$config['jitsi_domain']."/".$tenant.$room."?jwt=".$jsonResp.$extra;
+    if (empty($jsonResp) && (array_key_exists('auth_error_page',$config) && !empty($config['auth_error_page']) )) {
+            $URL="https://".$config['jitsi_domain']."/".$config['auth_error_page']."?domain=".$config['jitsi_domain']."tenant=".$tenant."$room=".$room.$extra;
+    }  
+    else 
+        $URL="https://".$config['jitsi_domain']."/".$tenant.$room."?jwt=".$jsonResp.$extra;
     header("Location: $URL", true, 302); 
     return;
 } catch (Exception $e){
