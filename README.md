@@ -86,7 +86,7 @@ Build Docker Image :
 docker image build -t jitsisaml2jwt .
 ```
 
-We also provide Docker image on DockerHub : [https://hub.docker.com/r/renater/jitisaml2jwt].
+We also provide Docker image on DockerHub : [https://hub.docker.com/r/renater/jitsisaml2jwt].
 
 Start with docker compose : 
 ```
