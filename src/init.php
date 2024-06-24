@@ -19,7 +19,7 @@ if (!is_dir(APP_ROOT.'/../lib/vendor'))
 require_once APP_ROOT.'/../lib/vendor/autoload.php';
 
 // Generator files
-$classes = ['TokenGenerator','AdvancedTokenGenerator', 'RestResponse'];
+$classes = ['TokenGenerator','AdvancedTokenGenerator', 'RestResponse', 'RESTCaller'];
 foreach ($classes as $class) {
     if (file_exists(APP_ROOT.'/classes/'.$class.'.class.php'))
         require_once(APP_ROOT.'/classes/'.$class.'.class.php');

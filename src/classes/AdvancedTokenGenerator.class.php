@@ -5,7 +5,6 @@ require_once(dirname(__FILE__).'/../init.php');
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-
 /**
  * Class Advabced TokenGenerator to generate JWT token
  */
@@ -17,6 +16,19 @@ class AdvancedTokenGenerator extends TokenGenerator{
         $hashSafeUrl = strtr($hashBase64, '+/', '--');
         $hashSafeUrl = rtrim($hashSafeUrl, '=');
         return substr($hashSafeUrl, 0, $length);
+    }
+
+    public function roomAlreadyStarted(string $room){
+        global $config;
+
+        foreach ($config['token_generator']['jicofo_room_endpoints'] as  $jicofo_ip) {
+            $caller = new RESTCaller("http://".$jicofo_ip.":8888");     
+            $result = $caller->get("/debug");
+            echo("result $result");
+            if (strpos($result,$room) == false )
+                return true;
+        }
+        return false;
     }
 
     public function emailValidConference(string $room, string $email){
@@ -69,7 +81,7 @@ class AdvancedTokenGenerator extends TokenGenerator{
 
         // private 
         if (array_key_exists('tenant',$requestData) && strpos($tenant,"private") !== false ){
-            if ( !$this->emailValidConference($room,$email) )
+            if (!$this->roomAlreadyStarted($room) && !$this->emailValidConference($room,$email) )
                 return '';
         }
 

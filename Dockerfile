@@ -3,7 +3,7 @@ FROM debian:bullseye-slim
 RUN apt update && apt-get -y install curl gettext-base\
     && apt-get update\
     && apt-get install -y --install-recommends apache2 libapache2-mod-shib shibboleth-sp-common shibboleth-sp-utils\
-    && apt-get -y install php php-mysql php-mbstring php-gmp composer zip unzip php-zip
+    && apt-get -y install php php-mysql php-curl php-mbstring php-gmp composer zip unzip php-zip
 
 
 COPY config/attribute-map.xml /etc/shibboleth/

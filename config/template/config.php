@@ -5,7 +5,8 @@ $config['version'] = '0.1';
 $config['token_generator'] = array(
     'key'    => '${JWT_APP_SECRET}',
     'app_id' => '${JWT_APP_ID}',
-    'token_mode' => '${JWT_TOKEN_MODE}'
+    'token_mode' => '${JWT_TOKEN_MODE}',
+    'jicofo_room_endpoints' =>  explode(',',getenv("JICOFO_ROOM_ENDPOINTS"))
 );
 
 $config['jitsi_domain'] = '${JITSI_DOMAIN}';
