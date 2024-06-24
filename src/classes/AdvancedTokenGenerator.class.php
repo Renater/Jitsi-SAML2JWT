@@ -20,12 +20,12 @@ class AdvancedTokenGenerator extends TokenGenerator{
 
     public function roomAlreadyStarted(string $room){
         global $config;
-
+        error_log("Check Room Started :  $room", 0);
         foreach ($config['token_generator']['jicofo_room_endpoints'] as  $jicofo_ip) {
             $caller = new RESTCaller("http://".$jicofo_ip.":8888");     
             $result = $caller->get("/debug");
-            echo("result $result");
-            if (strpos($result,$room) == false )
+            error_log("Result $jicofo_ip $result", 0);
+            if (strpos($result,$room) !== false )
                 return true;
         }
         return false;
@@ -33,6 +33,7 @@ class AdvancedTokenGenerator extends TokenGenerator{
 
     public function emailValidConference(string $room, string $email){
         $room_pattern = "/(.*)__(.*)_[0-9a-f]{6}-[0-9a-f]{6}-[0-9a-f]{6}$/";
+        error_log("Check emal valid  :  $email", 0);
         if (preg_match($room_pattern, $room, $match)){
             $roomName = $match[1];
             $uid = $match[2];
@@ -58,7 +59,7 @@ class AdvancedTokenGenerator extends TokenGenerator{
                  $displayName =  $email;
         } 
         else {
-            error_log("No Email Provided in Headers, we can genrate a token", 0);
+            error_log("No Email Provided in Headers, we can't genrate a token", 0);
             return '';
         }
         
@@ -81,7 +82,12 @@ class AdvancedTokenGenerator extends TokenGenerator{
 
         // private 
         if (array_key_exists('tenant',$requestData) && strpos($tenant,"private") !== false ){
-            if (!$this->roomAlreadyStarted($room) && !$this->emailValidConference($room,$email) )
+            $roomStarted = $this->roomAlreadyStarted($room);
+            $emailValid = $this->emailValidConference($room,$email);
+
+            error_log("Private   :  $room $email emailV=$emailValid roomV=$roomStarted", 0);
+
+            if (!$roomStarted && !$emailValid )
                 return '';
         }
 
