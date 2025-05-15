@@ -12,9 +12,11 @@ class AdvancedTokenGenerator extends TokenGenerator{
     
 
     private static function generateId(string $input, int $length = 8): string {
-        $hashBase64 = base64_encode(hash('sha256', $input, true));
-        $hashSafeUrl = strtr($hashBase64, '+/', '--');
+        $lowercaseInput = strtolower($input);
+        $hashBase64 = base64_encode(hash('sha256', $lowercaseInput, true));
+        $hashSafeUrl = str_replace(['+', '/'], '-', $hashBase64);
         $hashSafeUrl = rtrim($hashSafeUrl, '=');
+        $hashSafeUrl = strtolower($hashSafeUrl);
         return substr($hashSafeUrl, 0, $length);
     }
 
@@ -37,7 +39,7 @@ class AdvancedTokenGenerator extends TokenGenerator{
         if (preg_match($room_pattern, $room, $match)){
             $roomName = $match[1];
             $uid = $match[2];
-            $email_uid = strtolower( AdvancedTokenGenerator::generateId($roomName . $email, 12) );
+            $email_uid = AdvancedTokenGenerator::generateId($roomName . $email, 12) ;
             error_log("Check $uid  :  $email_uid", 0);
             if ($uid != $email_uid)
                 return false;
