@@ -20,8 +20,30 @@ class TokenGenerator {
 
     public function decodeHS256Token(array $jwt, string $key): string {
 
-        $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+        try {
+            $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+        } catch (Exception $e) {
+            error_log("Token decode error: ".$e->getMessage(), 0);
+            return "";
+        }    
         return $decoded;
+    }
+
+
+    public function isTokenValid(Array $requestData): bool {
+        global $config;
+        $key = $config['token_generator']['key'];
+        if (!array_key_exists('jwt',$requestData)) {
+            error_log("No JWT token provided", 0);
+            return false;
+        }
+        try {
+            JWT::decode($requestData['jwt'], new Key($key, 'HS256'));
+            return true;
+        } catch (Exception $e) {
+            error_log("Token validation error: ".$e->getMessage(), 0);
+            return false;
+        }    
     }
 
     public function getToken(Array $envData,Array $requestData): string {
