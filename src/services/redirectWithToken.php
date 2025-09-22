@@ -15,7 +15,12 @@ try {
     $jsonResp =  $tokenGenerator->getToken($_SERVER,$_REQUEST);
     $room=$_GET['room'];
     $tenant=$_GET['tenant'];
-    
+    // Refuse redirection for room=* or tenant=* to avoid creating a token valid for any room token and or every tenant
+    if ($room == '*' || $tenant == '*'){
+        throw new Exception("Invalid room or tenant");
+    }
+
+
     $extra="#config.prejoinConfig.enabled=false";
     if(array_key_exists('jitsi_meet_external_api_id',$_REQUEST)){
         $extra.="&jitsi_meet_external_api_id=";

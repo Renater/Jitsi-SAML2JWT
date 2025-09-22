@@ -93,10 +93,14 @@ class AdvancedTokenGenerator extends TokenGenerator{
                 return '';
         }
 
-        if (array_key_exists('validity_timestamp',$requestData))
+        if (array_key_exists('validity_timestamp',$requestData) && $config['enable_setting_validity'] === true )
             $validity=intval($requestData['validity_timestamp']);
-        else 
-            $validity=0;
+        else {
+            if (array_key_exists('default_validity',$config) && $config['default_validity'] > 0 )
+                $validity=time() +$config['default_validity'];
+            else
+                $validity=0;
+        }
 
         $gravatarHash = md5( strtolower( trim( $email  ) ) ); 
 
