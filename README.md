@@ -2,6 +2,7 @@
 
 Jitsi-SAML2JWT is a project to easily use SAML authentification with JWT, the new recommended Jitsi-Meet authentification mechanism. 
 
+<img src="doc/logo_jwtsaml.png" width=60% height=40%>
 
 ## Motivation
 
