@@ -8,15 +8,17 @@ echo "Generating config File from template and .env file"
 echo "PHP Token file"
 cat $CONFIG_DIR/template/config.php | envsubst > /usr/local/jitsi-SAML2JWT/config/config.php
 
+if [ $ENABLE_BACKEND_JWT_REQUEST = "true" ]
+then
+    cp $CONFIG_DIR/template/ports.conf /etc/apache2/ports.conf
+fi
+
 if [ $ENABLE_SHIBBOLETH = "true" ]
 then
     echo "Apache with SP File"
     cat $CONFIG_DIR/template/jwtgenerator-sp.conf | envsubst > /etc/apache2/sites-available/jitsi-auth.conf
 
-    if [ $ENABLE_BACKEND_JWT_REQUEST = "true" ]
-    then
-        cp $CONFIG_DIR/template/ports.conf /etc/apache2/ports.conf
-    fi
+ 
 
     if [ ! -f /etc/shibboleth/sp-cert.pem ]
     then

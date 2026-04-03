@@ -24,7 +24,7 @@ class AdvancedTokenGenerator extends TokenGenerator{
         global $config;
         error_log("Check Room Started :  $room", 0);
         foreach ($config['token_generator']['jicofo_room_endpoints'] as  $jicofo_ip) {
-            $caller = new RESTCaller("http://".$jicofo_ip.":8888");     
+            $caller = new RESTCaller("http://".$jicofo_ip);     
             $result = $caller->get("/debug");
             error_log("Result $jicofo_ip $result", 0);
             if (strpos($result,$room) !== false )
@@ -85,7 +85,13 @@ class AdvancedTokenGenerator extends TokenGenerator{
         // private 
         if (array_key_exists('tenant',$requestData) && strpos($tenant,"private") !== false ){
             $roomStarted = $this->roomAlreadyStarted($room);
-            $emailValid = $this->emailValidConference($room,$email);
+            // if email is with the format Authorized_By_email check if email is valid for this conference
+            if (strpos($email, 'Authorized_By_') === 0) {
+                $emailValid = $this->emailValidConference($room, substr($email, strlen('Authorized_By_')));
+            }
+            else {
+                $emailValid = $this->emailValidConference($room,$email);
+            }
 
             error_log("Private   :  $room $email emailV=$emailValid roomV=$roomStarted", 0);
 
